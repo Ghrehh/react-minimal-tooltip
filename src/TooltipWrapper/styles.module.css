@@ -1,9 +1,7 @@
 .wrapperOuter {
-  position: relative;
+  position: absolute;
 }
 
 .wrapper {
-  background-color: gray;
-  position: absolute;
-  left: 100px
+  position: relative;
 }
