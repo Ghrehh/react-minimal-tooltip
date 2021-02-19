@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react';
+import Tooltip from './Tooltip';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  render() {
+    return (
+      <>
+        <Tooltip
+          tooltip={<p>Very cool and interesting</p>}
+          position="top"
+          hoverDurationThreshold={1000}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <button>I'm interesting</button>
+        </Tooltip>
+      </>
+    );
+  }
 }
 
 export default App;
