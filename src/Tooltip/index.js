@@ -4,15 +4,15 @@ import HoverDetector from 'HoverDetector';
 
 const getPositioning = ({ position, tooltip, element }) => {
   const positioning = {
-    top: 'initial',
-    right: 'initial',
-    bottom: 'initial',
-    left: 'initial'
+    top: null,
+    right: null,
+    bottom: null,
+    left: null
   };
 
   // horizontal centering
   if (position === 'top' || position === 'bottom') {
-    positioning.left = (tooltip.width - element.width) / 2
+    positioning.left = (element.width - tooltip.width) / 2
   }
 
   // vertical centering
@@ -33,6 +33,21 @@ const getPositioning = ({ position, tooltip, element }) => {
   return positioning;
 }
 
+const formatPositioning = (positioning) => {
+  const formattedPositioning = {};
+
+  Object.keys(positioning).forEach(key => {
+    const value = positioning[key];
+    if (value === null) {
+      formattedPositioning[key] = 'initial';
+    } else {
+      formattedPositioning[key] = `${value}px`;
+    }
+  });
+
+  return formattedPositioning;
+}
+
 class Tooltip extends Component {
   state = {
     hovering: false
@@ -47,46 +62,23 @@ class Tooltip extends Component {
 
   componentDidUpdate(_, prevState) {
     if (prevState.hovering !== this.state.hovering) {
-      if (this.state.hovering === false) {
-        this.tooltipWrapperInnerRef.current.style.top = 'initial';
-        this.tooltipWrapperInnerRef.current.style.right = 'initial';
-        this.tooltipWrapperInnerRef.current.style.bottom = 'initial';
-        this.tooltipWrapperInnerRef.current.style.left = 'initial';
-      } else {
+      // default case when hovering is not active
+      let positioning = getPositioning({});
 
-        if (this.props.position === 'top') {
-          const elementHeight = this.hoverDetectorRef.current.offsetHeight;
-          const outerTooltipHeight = this.tooltipWrapperOuterRef.current.offsetHeight;
-          this.tooltipWrapperInnerRef.current.style.bottom = `${elementHeight + outerTooltipHeight}px`;
-
-          const elementWidth = this.hoverDetectorRef.current.offsetWidth;
-          const outerTooltipWidth = this.tooltipWrapperOuterRef.current.offsetWidth;
-          const diff = elementWidth - outerTooltipWidth;
-          this.tooltipWrapperInnerRef.current.style.left = `${diff / 2}px`;
-        } else if (this.props.position === 'bottom') {
-          const elementWidth = this.hoverDetectorRef.current.offsetWidth;
-          const outerTooltipWidth = this.tooltipWrapperOuterRef.current.offsetWidth;
-          const diff = elementWidth - outerTooltipWidth;
-          this.tooltipWrapperInnerRef.current.style.left = `${diff / 2}px`;
-        } else if (this.props.position === 'right') {
-          const elementHeight = this.hoverDetectorRef.current.offsetHeight;
-          const outerTooltipHeight = this.tooltipWrapperOuterRef.current.offsetHeight;
-          const diff = elementHeight - outerTooltipHeight
-
-          this.tooltipWrapperInnerRef.current.style.bottom = `${elementHeight - (diff / 2)}px`;
-          this.tooltipWrapperInnerRef.current.style.right = `${this.tooltipWrapperOuterRef.current.offsetWidth}px`;
-        } else if (this.props.position === 'left') {
-          const elementHeight = this.hoverDetectorRef.current.offsetHeight;
-          const outerTooltipHeight = this.tooltipWrapperOuterRef.current.offsetHeight;
-          const diff = elementHeight - outerTooltipHeight
-
-          this.tooltipWrapperInnerRef.current.style.bottom = `${elementHeight - (diff / 2)}px`;
-          this.tooltipWrapperInnerRef.current.style.left = `${this.hoverDetectorRef.current.offsetWidth}px`;
-        }
-
-
-
+      if (this.state.hovering) {
+        positioning = getPositioning({
+          position: this.props.position,
+          element: {
+            height: this.hoverDetectorRef.current.offsetHeight,
+            width: this.hoverDetectorRef.current.offsetWidth
+          },
+          tooltip: {
+            height: this.tooltipWrapperOuterRef.current.offsetHeight,
+            width: this.tooltipWrapperOuterRef.current.offsetWidth
+          }
+        });
       }
+      Object.assign(this.tooltipWrapperInnerRef.current.style, formatPositioning(positioning))
     }
   }
 
