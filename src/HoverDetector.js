@@ -1,10 +1,13 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 class HoverDetector extends Component {
   state = {
+    thresholdReached: false,
     timeoutId: null,
   }
+
+  divRef = createRef();
 
   handleEnter = (e) => {
     const timeoutId = setTimeout(this.thresholdReached, this.props.hoverDurationThreshold);
@@ -16,27 +19,31 @@ class HoverDetector extends Component {
 
   handleLeave = (e) => {
     if (this.state.timeoutId) clearTimeout(this.state.timeoutId)
-    this.setState({ timeoutId: null });
+    this.setState({ timeoutId: null, thresholdReached: false });
 
-    this.props.onChange(false);
     this.props.onMouseLeave(e);
   }
 
   thresholdReached = () => {
-    this.props.onChange(true);
+    this.setState({ thresholdReached: true });
   }
 
   render() {
-    const { hoverDurationThreshold, divRef, ...remainingProps } = this.props;
+    const { hoverDurationThreshold, ...remainingProps } = this.props;
 
     return (
       <div
         {...remainingProps}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
-        ref={divRef}
+        ref={this.divRef}
       >
-        {this.props.children}
+        {
+          this.props.children({
+            thresholdReached: this.state.thresholdReached,
+            internalDivRef: this.divRef
+          })
+        }
       </div>
     )
   }

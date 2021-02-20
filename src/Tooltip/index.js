@@ -1,6 +1,7 @@
-import { Component, createRef } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import HoverDetector from 'HoverDetector';
+import TooltipWrapper from 'TooltipWrapper';
 
 const getPositioning = ({ position, tooltip, element }) => {
   const positioning = {
@@ -49,60 +50,26 @@ const formatPositioning = (positioning) => {
 }
 
 class Tooltip extends Component {
-  state = {
-    hovering: false
-  }
-
-  hoverDetectorRef = createRef();
-  // separate ref for the absolute positioned part of the tooltip. Even though we apply
-  // the positioning to the relative portion the relative portion doesn't seem to include the
-  // height of its child. The absolute part does however.
-  tooltipWrapperOuterRef = createRef();
-  tooltipWrapperInnerRef = createRef();
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.hovering !== this.state.hovering) {
-      // default case when hovering is not active
-      let positioning = getPositioning({});
-
-      if (this.state.hovering) {
-        positioning = getPositioning({
-          position: this.props.position,
-          element: {
-            height: this.hoverDetectorRef.current.offsetHeight,
-            width: this.hoverDetectorRef.current.offsetWidth
-          },
-          tooltip: {
-            height: this.tooltipWrapperOuterRef.current.offsetHeight,
-            width: this.tooltipWrapperOuterRef.current.offsetWidth
-          }
-        });
-      }
-      Object.assign(this.tooltipWrapperInnerRef.current.style, formatPositioning(positioning))
-    }
-  }
-
   render() {
     const { position, hoverDurationThreshold, children, tooltip, ...remainingProps } = this.props;
 
     return (
       <HoverDetector
         {...remainingProps}
-        divRef={this.hoverDetectorRef}
         hoverDurationThreshold={hoverDurationThreshold}
-        onChange={hovering => this.setState({ hovering })}
       >
-        <>
-          {children}
-          <div
-            style={{ position: 'absolute', visibility: true ? 'visible' : 'hidden' }}
-            ref={this.tooltipWrapperOuterRef}
-          >
-            <div ref={this.tooltipWrapperInnerRef} style={{ position: 'relative' }}>
+        {({ thresholdReached, internalDivRef }) => (
+          <>
+            {children}
+            <TooltipWrapper
+              position={position}
+              visible={thresholdReached}
+              elementRef={internalDivRef}
+            >
               {tooltip}
-            </div>
-          </div>
-        </>
+            </TooltipWrapper>
+          </>
+        )}
       </HoverDetector>
     );
   }

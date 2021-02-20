@@ -8,7 +8,7 @@ class App extends Component {
         <div style={{ margin: 'auto', width: '200px', marginTop: '120px'}}>
           <Tooltip
             style={{ width: '128px' }}
-            tooltip={<p style={{ margin: '20px', padding: '12px', backgroundColor: 'gray' }}>Very cool and interesting</p>}
+            tooltip={<p style={{ margin: '20px', padding: '12px' }}>Very cool and interesting and some longer stuff</p>}
             position="top"
             hoverDurationThreshold={1000}
           >
@@ -18,31 +18,11 @@ class App extends Component {
         <div style={{ margin: 'auto', width: '200px', marginTop: '120px'}}>
           <Tooltip
             style={{ width: '128px' }}
-            tooltip={<p style={{ margin: '20px', padding: '12px', backgroundColor: 'gray' }}>Very cool and interesting</p>}
-            position="right"
-            hoverDurationThreshold={1000}
-          >
-            <button style={{ width: '100%' }}>Right Button</button>
-          </Tooltip>
-        </div>
-        <div style={{ margin: 'auto', width: '200px', marginTop: '120px'}}>
-          <Tooltip
-            style={{ width: '128px' }}
-            tooltip={<p style={{ margin: '20px', padding: '12px', backgroundColor: 'gray' }}>Very cool and interesting</p>}
+            tooltip={<p style={{ margin: '20px', padding: '12px' }}>Very cool and interesting and some longer stuff</p>}
             position="bottom"
             hoverDurationThreshold={1000}
           >
             <button style={{ width: '100%' }}>Bottom Button</button>
-          </Tooltip>
-        </div>
-        <div style={{ margin: 'auto', width: '200px', marginTop: '120px'}}>
-          <Tooltip
-            style={{ width: '128px' }}
-            tooltip={<p style={{ margin: '20px', padding: '12px', backgroundColor: 'gray' }}>Very cool and interesting</p>}
-            position="left"
-            hoverDurationThreshold={1000}
-          >
-            <button style={{ width: '100%' }}>Left Button</button>
           </Tooltip>
         </div>
       </>
