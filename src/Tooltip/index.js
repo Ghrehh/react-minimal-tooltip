@@ -2,6 +2,37 @@ import { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import HoverDetector from 'HoverDetector';
 
+const getPositioning = ({ position, tooltip, element }) => {
+  const positioning = {
+    top: 'initial',
+    right: 'initial',
+    bottom: 'initial',
+    left: 'initial'
+  };
+
+  // horizontal centering
+  if (position === 'top' || position === 'bottom') {
+    positioning.left = (tooltip.width - element.width) / 2
+  }
+
+  // vertical centering
+  if (position === 'right' || position === 'left') {
+    positioning.bottom = element.height - ((element.height - tooltip.height) / 2)
+  }
+
+  if (position === 'top') {
+    positioning.bottom = element.height + tooltip.height;
+  } else if (position === 'right') {
+    positioning.left = element.width;
+  } else if (position === 'bottom') {
+    // nothing
+  } else if (position === 'left') {
+    positioning.right = tooltip.width;
+  }
+
+  return positioning;
+}
+
 class Tooltip extends Component {
   state = {
     hovering: false
