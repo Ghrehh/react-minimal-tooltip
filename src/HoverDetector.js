@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class HoverDetector extends Component {
   state = {
     timeoutId: null,
-    thresholdReached: false,
   }
 
   handleEnter = (e) => {
@@ -17,29 +16,36 @@ class HoverDetector extends Component {
 
   handleLeave = (e) => {
     if (this.state.timeoutId) clearTimeout(this.state.timeoutId)
-    this.setState({ timeoutId: null, thresholdReached: false });
+    this.setState({ timeoutId: null });
 
+    this.props.onChange(false);
     this.props.onMouseLeave(e);
   }
 
   thresholdReached = () => {
-    this.setState({ thresholdReached: true });
+    this.props.onChange(true);
   }
 
   render() {
-    const { hoverDurationThreshold, ...remainingProps } = this.props;
+    const { hoverDurationThreshold, divRef, ...remainingProps } = this.props;
 
     return (
-      <div {...remainingProps} onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
-        {this.props.children(this.state.thresholdReached)}
+      <div
+        {...remainingProps}
+        onMouseEnter={this.handleEnter}
+        onMouseLeave={this.handleLeave}
+        ref={divRef}
+      >
+        {this.props.children}
       </div>
     )
   }
 }
 
 HoverDetector.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   hoverDurationThreshold: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
 }
