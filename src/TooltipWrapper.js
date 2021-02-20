@@ -21,6 +21,7 @@ class Tooltip extends Component {
     const defaultPositioning = {
       top: 'initial', right: 'initial', bottom: 'initial', left: 'initial'
     };
+
     if (prevProps.visible !== this.props.visible) {
       if (!this.props.visible) {
         Object.assign(this.innerRef.current.style, defaultPositioning)
@@ -29,31 +30,37 @@ class Tooltip extends Component {
       }
 
       const element = this.props.elementRef.current.getBoundingClientRect();
+      const outer = this.outerRef.current.getBoundingClientRect();
+
+      // move tooltip to above the element if ths position is top
+      if (this.props.position === 'top') {
+        this.innerRef.current.style.bottom = `${element.height + outer.height}px`;
+        this.decorationRef.current.style.bottom = `${element.height + outer.height}px`;
+      }
+
+      // move the decoration to the center of the element
       const decoration = this.decorationRef.current.getBoundingClientRect();
       const targetPosition = element.x + (element.width / 2);
-      let currentPosition = decoration.x + (decoration.width / 2);
-      let diff = targetPosition - currentPosition;
-      Object.assign(this.decorationRef.current.style, { left: `${diff}px` })
+      const decorationPosition = decoration.x + (decoration.width / 2);
+      const decorationDiff = targetPosition - decorationPosition;
+      this.decorationRef.current.style.left = `${decorationDiff}px`;
 
       const inner = this.innerRef.current.getBoundingClientRect();
 
-      if (targetPosition + (inner.width / 2) > document.documentElement.clientWidth ) {
-        diff = document.documentElement.clientWidth - inner.right;
-        Object.assign(this.innerRef.current.style, { left: `${diff}px` })
-        return;
-
-      }
-
-      if (targetPosition - (inner.width / 2) < 0 ) {
+      // move the tooltip to the center of the element unless that would move it off screen,
+      // in which case make it flush to the side.
+      if (targetPosition + (inner.width / 2) > outer.right) {
+        const innerDiff = outer.right - inner.right;
+        this.innerRef.current.style.left = `${innerDiff}px`;
         return;
       }
 
+      if (targetPosition - (inner.width / 2) < 0 ) return;
 
-      currentPosition = inner.x + (inner.width / 2);
-      diff = targetPosition - currentPosition;
+      const innerPosition = inner.x + (inner.width / 2);
+      const innerDiff = targetPosition - innerPosition;
 
-      //if targetPos + half of inner width > screenwidth == flush to right side
-      Object.assign(this.innerRef.current.style, { left: `${diff}px` })
+      this.innerRef.current.style.left = `${innerDiff}px`;
     }
   }
 
@@ -66,8 +73,8 @@ class Tooltip extends Component {
           visibility: this.props.visible ? 'visible' : 'hidden',
           display: 'flex',
           flexDirection: 'column',
-          left: 0,
-          right: 0
+          left: '10px',
+          right: '10px'
         }}
       >
         {this.props.position === 'bottom' && this.renderDecoration()}
@@ -77,7 +84,8 @@ class Tooltip extends Component {
             style={{
               overflow: 'auto',
               position: 'relative',
-              backgroundColor: 'purple'
+              backgroundColor: 'purple',
+              borderRadius: '3px'
             }}
           >
             {this.props.children}
