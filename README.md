@@ -43,6 +43,10 @@ tooltipColor|string|false|valid css/style color, note that this is applied separ
 tooltipStyle|object|false|style object that's applied to the visible part of the tooltip wrapper|{}
 tooltipClassname|string|false|css classname that's applied to the visible part of the tooltip wrapper|''
 
+## Advanced
+
+Two other components are exported `HoverDetector` and `TooltipWrapper`. These are the consituent parts of the main exported Tooltip component, if you want to do something a bit more funky then looking at these components in the src will be great fun, they're not that complicated.
+
 ## Advice
 I recommend creating your own wrapper around this component in your project, that way you can set sensible defaults for things like colors and hover durations. You can also name the props whatever you want if you think mine are a little to wordy.
 
@@ -51,8 +55,24 @@ This component works by putting a div with `overflow: auto` (to prevent margin c
 
 The tooltip will shrink to fit the screen width if necessary, but it wont reposition itself if there's not enough room to display its content. For instance if you put a tooltip with position 'top' at the very top of your page it might be partially clipped off.
 
+## Development
+
+This was bootstrapped with Create React App and we use that for development.
+
+To start the dev server:
+```
+yarn start
+```
+
+We have a custom webpack/babel setup we use to bundle the package into a module:
+```
+yarn build
+```
+
 ## Todo
 - Consider left and right positioning.
 - Document and describe the other two exposed components.
 - Tidy up the tooltip positioning logic.
 - Consider automatic positioning changing.
+- Add linting and tests, general clean up.
+- proof read this readme
