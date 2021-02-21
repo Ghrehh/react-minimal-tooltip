@@ -1,7 +1,7 @@
 {
   "name": "react-minimal-tooltip",
   "main": "dist/index.js",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "dependencies": {},
   "description": "Minimal React Tooltip Library",
   "scripts": {
