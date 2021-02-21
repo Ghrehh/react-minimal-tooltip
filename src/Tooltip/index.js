@@ -5,22 +5,34 @@ import TooltipWrapper from 'TooltipWrapper';
 
 class Tooltip extends Component {
   render() {
-    const { position, hoverDurationThreshold, children, tooltip, ...remainingProps } = this.props;
+    const {
+      tooltipPosition,
+      hoverDurationUntilVisible,
+      children,
+      tooltipChildren,
+      tooltipColor,
+      tooltipStyle,
+      tooltipClassname,
+      ...remainingProps
+    } = this.props;
 
     return (
       <HoverDetector
         {...remainingProps}
-        hoverDurationThreshold={hoverDurationThreshold}
+        hoverDurationThreshold={hoverDurationUntilVisible}
       >
         {({ thresholdReached, internalDivRef }) => (
           <>
             {children}
             <TooltipWrapper
-              position={position}
+              position={tooltipPosition}
               visible={thresholdReached}
               elementRef={internalDivRef}
+              color={tooltipColor}
+              style={tooltipStyle}
+              className={tooltipClassname}
             >
-              {tooltip}
+              {tooltipChildren}
             </TooltipWrapper>
           </>
         )}
@@ -30,14 +42,21 @@ class Tooltip extends Component {
 }
 
 Tooltip.propTypes = {
-  hoverDurationThreshold: PropTypes.number.isRequired,
+  hoverDurationUntilVisible: PropTypes.number,
   children: PropTypes.node.isRequired,
-  tooltip: PropTypes.node.isRequired,
-  position: PropTypes.string
+  tooltipChildren: PropTypes.node.isRequired,
+  tooltipPosition: PropTypes.string,
+  tooltipColor: PropTypes.string,
+  tooltipStyle: PropTypes.object,
+  tooltipClassname: PropTypes.string
 };
 
 Tooltip.defaultProps = {
-  position: 'top'
+  tooltipPosition: 'top',
+  hoverDurationUntilVisible: 500,
+  tooltipColor: '#d1d1d1',
+  tooltipStyle: {},
+  tooltipClassname: ''
 };
 
 export default Tooltip;

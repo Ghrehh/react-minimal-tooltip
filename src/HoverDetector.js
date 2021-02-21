@@ -50,9 +50,8 @@ class HoverDetector extends Component {
 }
 
 HoverDetector.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.func.isRequired,
   hoverDurationThreshold: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
 }

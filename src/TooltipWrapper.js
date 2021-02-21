@@ -21,7 +21,7 @@ class TooltipWrapper extends Component {
       }}
     >
       <svg width="100%" height="100%" viewBox="0 0 121 105" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60.5 0L120.689 114.25H0.311234L60.5 0Z" fill="purple"/>
+      <path d="M60.5 0L120.689 114.25H0.311234L60.5 0Z" fill={this.props.color}/>
       </svg>
     </div>
   )
@@ -91,11 +91,13 @@ class TooltipWrapper extends Component {
         <div style={{ display: 'flex' }}>
           <div
             ref={this.innerRef}
+            className={this.props.className}
             style={{
               overflow: 'auto',
               position: 'relative',
-              backgroundColor: 'purple',
-              borderRadius: '3px'
+              backgroundColor: this.props.color,
+              borderRadius: '3px',
+              ...this.props.style
             }}
           >
             {this.props.children}
@@ -112,7 +114,10 @@ TooltipWrapper.propTypes = {
   elementRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
   children: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
-  visible: PropTypes.bool.isRequired
+  visible: PropTypes.bool.isRequired,
+  color: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired
 };
 
 export default TooltipWrapper;
