@@ -1,7 +1,7 @@
 {
   "name": "react-minimal-tooltip",
   "main": "dist/index.js",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "dependencies": {},
   "description": "Minimal React Tooltip Library",
   "license": "(MIT OR Apache-2.0)",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/grehh/react-minimal-tooltip"
+    "url": "https://github.com/ghrehh/react-minimal-tooltip"
   },
   "keywords": [
     "react",
