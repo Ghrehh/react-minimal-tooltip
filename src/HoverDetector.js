@@ -1,4 +1,4 @@
-import { Component, createRef } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 class HoverDetector extends Component {
@@ -29,10 +29,11 @@ class HoverDetector extends Component {
   }
 
   render() {
-    const { hoverDurationThreshold, ...remainingProps } = this.props;
+    const { hoverDurationThreshold, style, ...remainingProps } = this.props;
 
     return (
       <div
+        style={{ overflow: 'auto', ...style }}
         {...remainingProps}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}

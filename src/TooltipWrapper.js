@@ -1,4 +1,4 @@
-import { Component, createRef } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 class TooltipWrapper extends Component {
@@ -93,6 +93,7 @@ class TooltipWrapper extends Component {
             ref={this.innerRef}
             className={this.props.className}
             style={{
+              padding: '6px',
               overflow: 'auto',
               position: 'relative',
               backgroundColor: this.props.color,

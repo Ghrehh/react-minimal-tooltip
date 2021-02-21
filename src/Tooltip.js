@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import HoverDetector from 'HoverDetector';
 import TooltipWrapper from 'TooltipWrapper';
@@ -22,7 +22,7 @@ class Tooltip extends Component {
         hoverDurationThreshold={hoverDurationUntilVisible}
       >
         {({ thresholdReached, internalDivRef }) => (
-          <>
+          <Fragment>
             {children}
             <TooltipWrapper
               position={tooltipPosition}
@@ -34,7 +34,7 @@ class Tooltip extends Component {
             >
               {tooltipChildren}
             </TooltipWrapper>
-          </>
+          </Fragment>
         )}
       </HoverDetector>
     );
