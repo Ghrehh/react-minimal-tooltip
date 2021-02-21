@@ -10,6 +10,10 @@
     "publish": "npm publish",
     "test": "NODE_PATH=./src react-scripts test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grehh/react-minimal-tooltip"
+  },
   "keywords": [
     "react",
     "component",
