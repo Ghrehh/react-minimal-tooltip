@@ -3,21 +3,6 @@ import PropTypes from 'prop-types';
 import HoverDetector from 'HoverDetector';
 import TooltipWrapper from 'TooltipWrapper';
 
-const formatPositioning = (positioning) => {
-  const formattedPositioning = {};
-
-  Object.keys(positioning).forEach(key => {
-    const value = positioning[key];
-    if (value === null) {
-      formattedPositioning[key] = 'initial';
-    } else {
-      formattedPositioning[key] = `${value}px`;
-    }
-  });
-
-  return formattedPositioning;
-}
-
 class Tooltip extends Component {
   render() {
     const { position, hoverDurationThreshold, children, tooltip, ...remainingProps } = this.props;
@@ -52,7 +37,7 @@ Tooltip.propTypes = {
 };
 
 Tooltip.defaultProps = {
-  position: null
+  position: 'top'
 };
 
 export default Tooltip;

@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
-class Tooltip extends Component {
+class TooltipWrapper extends Component {
   // takes up the entire width of the screen
   outerRef = createRef();
   // shrinks and grows with tooltip content, if this is the same width as the outer ref then
@@ -10,11 +10,20 @@ class Tooltip extends Component {
   // the pointy part of the speech bubble, it always needs to be moved to the center of the element
   decorationRef = createRef();
 
-  renderDecoration = () => (
+  renderDecoration = (invert) => (
     <div
       ref={this.decorationRef}
-      style={{ position: 'relative', width: '7px', height: '7px', backgroundColor: 'blue' }}
-    />
+      style={{
+        height: '20px',
+        width: '20px',
+        position: 'relative',
+        transform: invert ? 'scaleY(-1)' : 'none'
+      }}
+    >
+      <svg width="100%" height="100%" viewBox="0 0 121 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60.5 0L120.689 114.25H0.311234L60.5 0Z" fill="purple"/>
+      </svg>
+    </div>
   )
 
   componentDidUpdate(prevProps) {
@@ -74,7 +83,8 @@ class Tooltip extends Component {
           display: 'flex',
           flexDirection: 'column',
           left: '10px',
-          right: '10px'
+          right: '10px',
+          pointerEvents: 'none'
         }}
       >
         {this.props.position === 'bottom' && this.renderDecoration()}
@@ -91,13 +101,13 @@ class Tooltip extends Component {
             {this.props.children}
           </div>
         </div>
-        {this.props.position === 'top' && this.renderDecoration()}
+        {this.props.position === 'top' && this.renderDecoration(true)}
       </div>
     );
   }
 }
 
-Tooltip.propTypes = {
+TooltipWrapper.propTypes = {
   // ref pointing to the element this tooltip is for
   elementRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
   children: PropTypes.node.isRequired,
@@ -105,4 +115,4 @@ Tooltip.propTypes = {
   visible: PropTypes.bool.isRequired
 };
 
-export default Tooltip;
+export default TooltipWrapper;
