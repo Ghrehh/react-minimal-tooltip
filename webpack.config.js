@@ -27,5 +27,11 @@
        amd: 'react',
        root: '_',
      },
+     'prop-types': {
+       commonjs: 'prop-types',
+       commonjs2: 'prop-types',
+       amd: 'prop-types',
+       root: '_',
+     },
    },
   };
