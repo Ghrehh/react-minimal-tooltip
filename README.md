@@ -51,7 +51,7 @@ Two other components are exported `HoverDetector` and `TooltipWrapper`. These ar
 I recommend creating your own wrapper around this component in your project, that way you can set sensible defaults for things like colors and hover durations. You can also name the props whatever you want if you think mine are a little to wordy.
 
 ## Thing to keep in mind
-This component works by putting a div with `overflow: auto` (to prevent margin collapses) around the node the tooltip is describing. This both gives an element to listen to mouse events on, as well as an "anchor" to use to position the tooltip itself. Just keep that wrapping div in mind when adding tooltips to your layout. Remember that you can pass props like `className` or `style` to the tooltip and they'll be passed through to this wrapping div as mentioned above in the API section.
+This component works by putting a div around the node the tooltip is describing. This both gives an element to listen to mouse events on, as well as an "anchor" to use to position the tooltip itself. Just keep that wrapping div in mind when adding tooltips to your layout. Remember that you can pass props like `className` or `style` to the tooltip and they'll be passed through to this wrapping div as mentioned above in the API section.
 
 The tooltip will shrink to fit the screen width if necessary, but it wont reposition itself if there's not enough room to display its content. For instance if you put a tooltip with position 'top' at the very top of your page it might be partially clipped off.
 
