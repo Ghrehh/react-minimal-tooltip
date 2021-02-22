@@ -29,6 +29,18 @@ class App extends Component {
             <button>Button Number Four, the Complex One</button>
           </Tooltip>
         </div>
+        <br />
+        <br />
+        <br />
+        <Tooltip tooltipChildren={ipsum} tooltipPosition="bottom">
+          <p className={styles.paragraph}>Hover over me</p>
+        </Tooltip>
+        <br />
+        <br />
+        <br />
+        <Tooltip tooltipChildren={ipsum} tooltipPosition="top">
+          <p className={styles.paragraph}>Hover over me</p>
+        </Tooltip>
       </div>
     );
   }

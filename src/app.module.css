@@ -9,3 +9,9 @@
 .buttonFourTooltip {
   padding: 10px;
 }
+
+.paragraph {
+  width: 400px;
+  background-color: teal;
+  margin: 20px auto;
+}

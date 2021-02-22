@@ -14,8 +14,8 @@ class TooltipWrapper extends Component {
     <div
       ref={this.decorationRef}
       style={{
-        height: '20px',
-        width: '20px',
+        height: '13px',
+        width: '13px',
         position: 'relative',
         transform: invert ? 'scaleY(-1)' : 'none'
       }}
@@ -40,21 +40,29 @@ class TooltipWrapper extends Component {
 
       const element = this.props.elementRef.current.getBoundingClientRect();
       const outer = this.outerRef.current.getBoundingClientRect();
+      const decoration = this.decorationRef.current.getBoundingClientRect();
+      const inner = this.innerRef.current.getBoundingClientRect();
 
       // move tooltip to above the element if ths position is top
       if (this.props.position === 'top') {
-        this.innerRef.current.style.bottom = `${element.height + outer.height}px`;
-        this.decorationRef.current.style.bottom = `${element.height + outer.height}px`;
+        const targetLocation = element.top;
+        const currentLocation = decoration.bottom;
+        const diff = currentLocation - targetLocation;
+        this.innerRef.current.style.bottom = `${diff}px`;
+        this.decorationRef.current.style.bottom = `${diff}px`;
+      } else {
+        const targetLocation = element.bottom;
+        const currentLocation = decoration.top;
+        const diff = currentLocation - targetLocation;
+        this.innerRef.current.style.bottom = `${diff}px`;
+        this.decorationRef.current.style.bottom = `${diff}px`;
       }
 
       // move the decoration to the center of the element
-      const decoration = this.decorationRef.current.getBoundingClientRect();
       const targetPosition = element.x + (element.width / 2);
       const decorationPosition = decoration.x + (decoration.width / 2);
       const decorationDiff = targetPosition - decorationPosition;
       this.decorationRef.current.style.left = `${decorationDiff}px`;
-
-      const inner = this.innerRef.current.getBoundingClientRect();
 
       // move the tooltip to the center of the element unless that would move it off screen,
       // in which case make it flush to the side.

@@ -33,7 +33,6 @@ class HoverDetector extends Component {
 
     return (
       <div
-        style={{ overflow: 'auto', ...style }}
         {...remainingProps}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
