@@ -12,7 +12,7 @@ class Tooltip extends Component {
       tooltipChildren,
       tooltipColor,
       tooltipStyle,
-      tooltipClassname,
+      tooltipClassName,
       ...remainingProps
     } = this.props;
 
@@ -30,7 +30,7 @@ class Tooltip extends Component {
               elementRef={internalDivRef}
               color={tooltipColor}
               style={tooltipStyle}
-              className={tooltipClassname}
+              className={tooltipClassName}
             >
               {tooltipChildren}
             </TooltipWrapper>
@@ -48,7 +48,7 @@ Tooltip.propTypes = {
   tooltipPosition: PropTypes.string,
   tooltipColor: PropTypes.string,
   tooltipStyle: PropTypes.object,
-  tooltipClassname: PropTypes.string
+  tooltipClassName: PropTypes.string
 };
 
 Tooltip.defaultProps = {
@@ -56,7 +56,7 @@ Tooltip.defaultProps = {
   hoverDurationUntilVisible: 500,
   tooltipColor: '#d1d1d1',
   tooltipStyle: {},
-  tooltipClassname: ''
+  tooltipClassName: ''
 };
 
 export default Tooltip;
