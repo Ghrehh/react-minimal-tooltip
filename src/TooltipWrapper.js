@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 class TooltipWrapper extends Component {
@@ -9,6 +10,15 @@ class TooltipWrapper extends Component {
   innerRef = createRef();
   // the pointy part of the speech bubble, it always needs to be moved to the center of the element
   decorationRef = createRef();
+  portalTarget = document.createElement('div');
+
+  componentDidMount() {
+    document.body.appendChild(this.portalTarget);
+  }
+
+  componentWillUnmount() {
+    document.body.removeChild(this.portalTarget);
+  }
 
   renderDecoration = (invert) => (
     <div
@@ -27,16 +37,8 @@ class TooltipWrapper extends Component {
   )
 
   componentDidUpdate(prevProps) {
-    const defaultPositioning = {
-      top: 'initial', right: 'initial', bottom: 'initial', left: 'initial'
-    };
-
     if (prevProps.visible !== this.props.visible) {
-      if (!this.props.visible) {
-        Object.assign(this.innerRef.current.style, defaultPositioning)
-        Object.assign(this.decorationRef.current.style, defaultPositioning)
-        return;
-      }
+      if (!this.props.visible) return;
 
       const element = this.props.elementRef.current.getBoundingClientRect();
       const outer = this.outerRef.current.getBoundingClientRect();
@@ -82,12 +84,13 @@ class TooltipWrapper extends Component {
   }
 
   render() {
-    return (
+    if (!this.props.visible) return null;
+
+    return ReactDOM.createPortal(
       <div
         ref={this.outerRef}
         style={{
           position: 'absolute',
-          visibility: this.props.visible ? 'visible' : 'hidden',
           display: 'flex',
           flexDirection: 'column',
           left: '10px',
@@ -101,11 +104,8 @@ class TooltipWrapper extends Component {
             ref={this.innerRef}
             className={this.props.className}
             style={{
-              padding: '6px',
-              overflow: 'auto',
               position: 'relative',
               backgroundColor: this.props.color,
-              borderRadius: '3px',
               ...this.props.style
             }}
           >
@@ -113,7 +113,8 @@ class TooltipWrapper extends Component {
           </div>
         </div>
         {this.props.position === 'top' && this.renderDecoration(true)}
-      </div>
+      </div>,
+      this.portalTarget
     );
   }
 }

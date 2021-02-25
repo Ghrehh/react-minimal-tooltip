@@ -27,6 +27,12 @@
        amd: 'react',
        root: '_',
      },
+     'react-dom': {
+       commonjs: 'react-dom',
+       commonjs2: 'react-dom',
+       amd: 'react-dom',
+       root: '_',
+     },
      'prop-types': {
        commonjs: 'prop-types',
        commonjs2: 'prop-types',

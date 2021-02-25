@@ -1,7 +1,7 @@
 {
   "name": "react-minimal-tooltip",
   "main": "dist/index.js",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "dependencies": {},
   "description": "Minimal React Tooltip Library",
   "license": "(MIT OR Apache-2.0)",
@@ -46,7 +46,8 @@
   },
   "peerDependencies": {
     "prop-types": "x.x.x",
-    "react": "x.x.x"
+    "react": "16.x.x",
+    "react-dom": "16.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
