@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div className={styles.page}>
         <div className={styles.buttonContainer}>
-          <Tooltip tooltipChildren="The first button" tooltipPosition="bottom">
+          <Tooltip tooltipZIndex={100}tooltipChildren="The first button" tooltipPosition="bottom">
             <button>Button Number One</button>
           </Tooltip>
           <Tooltip tooltipChildren="The second button" tooltipPosition="bottom">

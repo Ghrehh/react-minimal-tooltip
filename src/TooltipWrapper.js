@@ -90,6 +90,7 @@ class TooltipWrapper extends Component {
       <div
         ref={this.outerRef}
         style={{
+          zIndex: this.props.zIndex,
           position: 'absolute',
           display: 'flex',
           flexDirection: 'column',
@@ -127,7 +128,8 @@ TooltipWrapper.propTypes = {
   visible: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
+  zIndex: PropTypes.number.isRequired
 };
 
 export default TooltipWrapper;

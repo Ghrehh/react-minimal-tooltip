@@ -42,6 +42,7 @@ tooltipPosition|string|false|the position of the tooltip, should be 'top' or 'bo
 tooltipColor|string|false|valid css/style color, note that this is applied separately from `tooltipStyle` as the color is also applied to an svg element|'#d1d1d1'
 tooltipStyle|object|false|style object that's applied to the visible part of the tooltip wrapper|{}
 tooltipClassName|string|false|css className that's applied to the visible part of the tooltip wrapper|''
+tooltipZIndex|number|false|z-index applied to the tooltip|1
 
 ## Advanced
 
