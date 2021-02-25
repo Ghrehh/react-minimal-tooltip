@@ -13,6 +13,7 @@ class TooltipWrapper extends Component {
   portalTarget = document.createElement('div');
 
   componentDidMount() {
+    this.portalTarget.style.height = 0;
     document.body.appendChild(this.portalTarget);
   }
 
@@ -47,17 +48,9 @@ class TooltipWrapper extends Component {
 
       // move tooltip to above the element if ths position is top
       if (this.props.position === 'top') {
-        const targetLocation = element.top;
-        const currentLocation = decoration.bottom;
-        const diff = currentLocation - targetLocation;
-        this.innerRef.current.style.bottom = `${diff}px`;
-        this.decorationRef.current.style.bottom = `${diff}px`;
+        this.outerRef.current.style.top = `${element.top - outer.height}px`;
       } else {
-        const targetLocation = element.bottom;
-        const currentLocation = decoration.top;
-        const diff = currentLocation - targetLocation;
-        this.innerRef.current.style.bottom = `${diff}px`;
-        this.decorationRef.current.style.bottom = `${diff}px`;
+        this.outerRef.current.style.top = `${element.bottom}px`;
       }
 
       // move the decoration to the center of the element
@@ -84,6 +77,7 @@ class TooltipWrapper extends Component {
   }
 
   render() {
+
     if (!this.props.visible) return null;
 
     return ReactDOM.createPortal(
