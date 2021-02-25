@@ -1,7 +1,7 @@
 {
   "name": "react-minimal-tooltip",
   "main": "dist/index.js",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "dependencies": {},
   "description": "Minimal React Tooltip Library",
   "license": "(MIT OR Apache-2.0)",

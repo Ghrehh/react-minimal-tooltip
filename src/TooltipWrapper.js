@@ -13,8 +13,7 @@ class TooltipWrapper extends Component {
   portalTarget = document.createElement('div');
 
   componentDidMount() {
-    this.portalTarget.style.height = 0;
-    document.body.appendChild(this.portalTarget);
+    document.body.prepend(this.portalTarget);
   }
 
   componentWillUnmount() {
