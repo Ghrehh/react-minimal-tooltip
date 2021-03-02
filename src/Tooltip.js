@@ -1,58 +1,56 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import HoverDetector from 'HoverDetector';
 import TooltipWrapper from 'TooltipWrapper';
 
-class Tooltip extends Component {
-  render() {
-    const {
-      devMode,
-      tooltipPosition,
-      hoverDurationUntilVisible,
-      children,
-      tooltipChildren,
-      tooltipColor,
-      tooltipStyle,
-      tooltipClassName,
-      tooltipZIndex,
-      tooltipPointerSize,
-      tooltipSpacing,
-      tooltipFade,
-      tooltipFadeDuration,
-      tooltipFadeEasingFunction,
-      ...remainingProps
-    } = this.props;
+const Tooltip = (props) => {
+  const {
+    devMode,
+    tooltipPosition,
+    hoverDurationUntilVisible,
+    children,
+    tooltipChildren,
+    tooltipColor,
+    tooltipStyle,
+    tooltipClassName,
+    tooltipZIndex,
+    tooltipPointerSize,
+    tooltipSpacing,
+    tooltipFade,
+    tooltipFadeDuration,
+    tooltipFadeEasingFunction,
+    ...remainingProps
+  } = props;
 
-    return (
-      <HoverDetector
-        {...remainingProps}
-        hoverDurationThreshold={hoverDurationUntilVisible}
-      >
-        {({ thresholdReached, internalDivRef }) => (
-          <Fragment>
-            {children}
-            <TooltipWrapper
-              devMode={devMode}
-              position={tooltipPosition}
-              visible={thresholdReached}
-              elementRef={internalDivRef}
-              color={tooltipColor}
-              style={tooltipStyle}
-              className={tooltipClassName}
-              zIndex={tooltipZIndex}
-              pointerSize={tooltipPointerSize}
-              spacing={tooltipSpacing}
-              fade={tooltipFade}
-              fadeDuration={tooltipFadeDuration}
-              fadeEasingFunction={tooltipFadeEasingFunction}
-            >
-              {tooltipChildren}
-            </TooltipWrapper>
-          </Fragment>
-        )}
-      </HoverDetector>
-    );
-  }
+  return (
+    <HoverDetector
+      {...remainingProps}
+      hoverDurationThreshold={hoverDurationUntilVisible}
+    >
+      {({ thresholdReached, internalDivRef }) => (
+        <Fragment>
+          {children}
+          <TooltipWrapper
+            devMode={devMode}
+            position={tooltipPosition}
+            visible={thresholdReached}
+            elementRef={internalDivRef}
+            color={tooltipColor}
+            style={tooltipStyle}
+            className={tooltipClassName}
+            zIndex={tooltipZIndex}
+            pointerSize={tooltipPointerSize}
+            spacing={tooltipSpacing}
+            fade={tooltipFade}
+            fadeDuration={tooltipFadeDuration}
+            fadeEasingFunction={tooltipFadeEasingFunction}
+          >
+            {tooltipChildren}
+          </TooltipWrapper>
+        </Fragment>
+      )}
+    </HoverDetector>
+  );
 }
 
 Tooltip.propTypes = {
