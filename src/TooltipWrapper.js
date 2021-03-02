@@ -24,14 +24,25 @@ class TooltipWrapper extends Component {
     <div
       ref={this.decorationRef}
       style={{
-        height: '13px',
-        width: '13px',
+        height: `${this.props.pointerSize}px`,
+        width: `${this.props.pointerSize}px`,
         position: 'relative',
         transform: invert ? 'scaleY(-1)' : 'none'
       }}
     >
-      <svg width="100%" height="100%" viewBox="0 0 121 105" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60.5 0L120.689 114.25H0.311234L60.5 0Z" fill={this.props.color}/>
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 92 80"
+        style={{
+          display: 'block',
+          position: 'relative',
+          top: '2px'
+        }}
+      >
+        <g width="100%" height="100%">
+          <polygon id="Polygon" fill={this.props.color} points="46 0 91.8993464 79.5 0.100653599 79.5" />
+        </g>
       </svg>
     </div>
   )
@@ -39,6 +50,9 @@ class TooltipWrapper extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.visible !== this.props.visible) {
       if (!this.props.visible) return;
+      this.outerRef.current.style.top = 'initial';
+      this.innerRef.current.style.left = 'initial';
+      this.decorationRef.current.style.left = 'initial';
 
       const element = this.props.elementRef.current.getBoundingClientRect();
       const outer = this.outerRef.current.getBoundingClientRect();
@@ -47,9 +61,9 @@ class TooltipWrapper extends Component {
 
       // move tooltip to above the element if ths position is top
       if (this.props.position === 'top') {
-        this.outerRef.current.style.top = `${element.top - outer.height}px`;
+        this.outerRef.current.style.top = `${element.top - outer.height - this.props.spacing}px`;
       } else {
-        this.outerRef.current.style.top = `${element.bottom}px`;
+        this.outerRef.current.style.top = `${element.bottom + this.props.spacing}px`;
       }
 
       // move the decoration to the center of the element
@@ -76,9 +90,6 @@ class TooltipWrapper extends Component {
   }
 
   render() {
-
-    if (!this.props.visible) return null;
-
     return ReactDOM.createPortal(
       <div
         ref={this.outerRef}
@@ -89,7 +100,9 @@ class TooltipWrapper extends Component {
           flexDirection: 'column',
           left: '10px',
           right: '10px',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          transition: this.props.fade ? `opacity ${this.props.fadeDuration} ${this.props.fadeEasingFunction}` : 'none',
+          opacity: this.props.visible || this.props.devMode ? '1' : '0'
         }}
       >
         {this.props.position === 'bottom' && this.renderDecoration()}
@@ -122,7 +135,12 @@ TooltipWrapper.propTypes = {
   color: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
   className: PropTypes.string.isRequired,
-  zIndex: PropTypes.number.isRequired
+  zIndex: PropTypes.number.isRequired,
+  pointerSize: PropTypes.number.isRequired,
+  spacing: PropTypes.number.isRequired,
+  fade: PropTypes.bool.isRequired,
+  fadeDuration: PropTypes.string.isRequired,
+  fadeEasingFunction: PropTypes.string.isRequired
 };
 
 export default TooltipWrapper;

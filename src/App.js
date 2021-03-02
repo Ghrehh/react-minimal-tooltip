@@ -16,13 +16,13 @@ class App extends Component {
     return (
       <div className={styles.page}>
         <div className={styles.buttonContainer}>
-          <Tooltip tooltipZIndex={100}tooltipChildren="The first button" tooltipPosition="bottom">
+          <Tooltip tooltipZIndex={100}tooltipChildren="The first button" tooltipPosition="bottom" tooltipPointerSize={20} tooltipSpacing={5}>
             <button>Button Number One</button>
           </Tooltip>
-          <Tooltip tooltipChildren="The second button" tooltipPosition="bottom">
+          <Tooltip tooltipChildren="The second button" tooltipPosition="bottom" tooltipFadeDuration="1s" tooltipFadeEasingFunction="linear">
             <button>Button Number Two</button>
           </Tooltip>
-          <Tooltip tooltipChildren={ipsum} tooltipPosition="bottom">
+          <Tooltip tooltipChildren={ipsum} tooltipPosition="bottom" tooltipFade={false}>
             <button>Button Number Three, the Wordy One</button>
           </Tooltip>
           <Tooltip tooltipChildren={<ButtonFour />} tooltipPosition="bottom">
@@ -38,7 +38,7 @@ class App extends Component {
         <br />
         <br />
         <br />
-        <Tooltip tooltipChildren={ipsum} tooltipPosition="top">
+        <Tooltip tooltipChildren={ipsum} tooltipPosition="top" tooltipSpacing={10}>
           <p className={styles.paragraph}>Hover over me</p>
         </Tooltip>
       </div>
