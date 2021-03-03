@@ -14,6 +14,12 @@ const ButtonFour = () => (
 class App extends Component {
   render() {
     return (
+      <>
+      <header className={styles.header}>
+        <Tooltip tooltipZIndex={100}tooltipChildren="The first button" tooltipPosition="bottom" tooltipPointerSize={20} tooltipSpacing={5}>
+          <button>Sticky Header Button</button>
+        </Tooltip>
+      </header>
       <div className={styles.page}>
         <div className={styles.buttonContainer}>
           <Tooltip tooltipZIndex={100}tooltipChildren="The first button" tooltipPosition="bottom" tooltipPointerSize={20} tooltipSpacing={5}>
@@ -33,15 +39,16 @@ class App extends Component {
         <br />
         <br />
         <Tooltip tooltipChildren={ipsum} tooltipPosition="bottom">
-          <p className={styles.paragraph}>Hover over me</p>
+          <p className={styles.paragraph}>Hover over me 1</p>
         </Tooltip>
         <br />
         <br />
         <br />
         <Tooltip tooltipChildren={ipsum} tooltipPosition="top" tooltipSpacing={10}>
-          <p className={styles.paragraph}>Hover over me</p>
+          <p className={styles.paragraph}>Hover over me 2</p>
         </Tooltip>
       </div>
+        </>
     );
   }
 }

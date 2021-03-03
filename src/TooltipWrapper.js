@@ -14,10 +14,12 @@ class TooltipWrapper extends Component {
 
   componentDidMount() {
     document.body.prepend(this.portalTarget);
+    window.addEventListener('scroll', this.position)
   }
 
   componentWillUnmount() {
     document.body.removeChild(this.portalTarget);
+    window.removeEventListener('scroll', this.position)
   }
 
   renderDecoration = (invert) => (
@@ -49,44 +51,49 @@ class TooltipWrapper extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.visible !== this.props.visible) {
-      if (!this.props.visible) return;
-      this.outerRef.current.style.top = 'initial';
-      this.innerRef.current.style.left = 'initial';
-      this.decorationRef.current.style.left = 'initial';
-
-      const element = this.props.elementRef.current.getBoundingClientRect();
-      const outer = this.outerRef.current.getBoundingClientRect();
-      const decoration = this.decorationRef.current.getBoundingClientRect();
-      const inner = this.innerRef.current.getBoundingClientRect();
-
-      // move tooltip to above the element if ths position is top
-      if (this.props.position === 'top') {
-        this.outerRef.current.style.top = `${element.top - outer.height - this.props.spacing}px`;
-      } else {
-        this.outerRef.current.style.top = `${element.bottom + this.props.spacing}px`;
-      }
-
-      // move the decoration to the center of the element
-      const targetPosition = element.x + (element.width / 2);
-      const decorationPosition = decoration.x + (decoration.width / 2);
-      const decorationDiff = targetPosition - decorationPosition;
-      this.decorationRef.current.style.left = `${decorationDiff}px`;
-
-      // move the tooltip to the center of the element unless that would move it off screen,
-      // in which case make it flush to the side.
-      if (targetPosition + (inner.width / 2) > outer.right) {
-        const innerDiff = outer.right - inner.right;
-        this.innerRef.current.style.left = `${innerDiff}px`;
-        return;
-      }
-
-      if (targetPosition - (inner.width / 2) < 0 ) return;
-
-      const innerPosition = inner.x + (inner.width / 2);
-      const innerDiff = targetPosition - innerPosition;
-
-      this.innerRef.current.style.left = `${innerDiff}px`;
+      this.position();
     }
+  }
+
+  position = () => {
+    // early return so non-visible tooltips don't reposition
+    if (!this.props.visible) return;
+    this.outerRef.current.style.top = 'initial';
+    this.innerRef.current.style.left = 'initial';
+    this.decorationRef.current.style.left = 'initial';
+
+    const element = this.props.elementRef.current.getBoundingClientRect();
+    const outer = this.outerRef.current.getBoundingClientRect();
+    const decoration = this.decorationRef.current.getBoundingClientRect();
+    const inner = this.innerRef.current.getBoundingClientRect();
+
+    // move tooltip to above the element if ths position is top
+    if (this.props.position === 'top') {
+      this.outerRef.current.style.top = `${element.top - outer.height - this.props.spacing}px`;
+    } else {
+      this.outerRef.current.style.top = `${element.bottom + this.props.spacing}px`;
+    }
+
+    // move the decoration to the center of the element
+    const targetPosition = element.x + (element.width / 2);
+    const decorationPosition = decoration.x + (decoration.width / 2);
+    const decorationDiff = targetPosition - decorationPosition;
+    this.decorationRef.current.style.left = `${decorationDiff}px`;
+
+    // move the tooltip to the center of the element unless that would move it off screen,
+    // in which case make it flush to the side.
+    if (targetPosition + (inner.width / 2) > outer.right) {
+      const innerDiff = outer.right - inner.right;
+      this.innerRef.current.style.left = `${innerDiff}px`;
+      return;
+    }
+
+    if (targetPosition - (inner.width / 2) < 0 ) return;
+
+    const innerPosition = inner.x + (inner.width / 2);
+    const innerDiff = targetPosition - innerPosition;
+
+    this.innerRef.current.style.left = `${innerDiff}px`;
   }
 
   render() {
@@ -95,7 +102,7 @@ class TooltipWrapper extends Component {
         ref={this.outerRef}
         style={{
           zIndex: this.props.zIndex,
-          position: 'absolute',
+          position: 'fixed',
           display: 'flex',
           flexDirection: 'column',
           left: '10px',
