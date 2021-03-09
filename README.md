@@ -43,6 +43,11 @@ tooltipColor|string|false|valid css/style color, note that this is applied separ
 tooltipStyle|object|false|style object that's applied to the visible part of the tooltip wrapper|{}
 tooltipClassName|string|false|css className that's applied to the visible part of the tooltip wrapper|''
 tooltipZIndex|number|false|z-index applied to the tooltip|1
+tooltipPointerSize|number|false|size of the pointy part of the tooltip|12
+tooltipSpacing|number|false|space between the tooltip and the item it's describing|0
+tooltipFade|boolean|false|whether or not the tooltip should use a fade animation|true
+tooltipFadeDuration|string|false|duration of the fade animation|'0.2s'
+tooltipFadeEasingFunction|string|false|easing function used for the fade animation|'east-in-out'
 
 ## Advanced
 
