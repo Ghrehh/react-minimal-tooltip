@@ -1,43 +1,39 @@
-  const path = require('path');
-
-  module.exports = {
+module.exports = [
+  {
+    experiments: {
+      outputModule: true,
+    },
     entry: './src/entrypoint.js',
     resolve: {
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+      modules: ['src', 'node_modules'],
     },
     module: {
       rules: [
         {
           test: /\.js$/,
-          exclude: /node_modules/,
-          use: ['babel-loader'],
+          include: /src/,
+          use: 'babel-loader',
+        },
+      ],
+    }
+  },
+  {
+    entry: './src/entrypoint.js',
+    resolve: {
+      modules: ['src', 'node_modules'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: /src/,
+          use: 'babel-loader',
         },
       ],
     },
-    output: {
-      path: path.resolve(__dirname, './dist'),
-      filename: 'index.js',
-      library: 'reactMinimalTooltip',
-      libraryTarget: 'umd',
-    },
     externals: {
-     react: {
-       commonjs: 'react',
-       commonjs2: 'react',
-       amd: 'react',
-       root: '_',
-     },
-     'react-dom': {
-       commonjs: 'react-dom',
-       commonjs2: 'react-dom',
-       amd: 'react-dom',
-       root: '_',
-     },
-     'prop-types': {
-       commonjs: 'prop-types',
-       commonjs2: 'prop-types',
-       amd: 'prop-types',
-       root: '_',
-     },
-   },
-  };
+      react: 'react',
+      'prop-types': 'prop-types'
+    },
+  },
+]

@@ -1,5 +1,4 @@
 import { Component, createRef } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 class TooltipWrapper extends Component {
@@ -97,7 +96,7 @@ class TooltipWrapper extends Component {
   }
 
   render() {
-    return ReactDOM.createPortal(
+    return(
       <div
         ref={this.outerRef}
         style={{
@@ -127,8 +126,7 @@ class TooltipWrapper extends Component {
           </div>
         </div>
         {this.props.position === 'top' && this.renderDecoration(true)}
-      </div>,
-      this.portalTarget
+      </div>
     );
   }
 }
