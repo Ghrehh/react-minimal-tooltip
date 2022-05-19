@@ -1,5 +1,4 @@
-const path = require('path');
-exports = [
+module.exports = [
   {
     experiments: {
       outputModule: true,
@@ -11,8 +10,12 @@ exports = [
       },
     },
     resolve: {
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+      modules: ['src', 'node_modules'],
     },
+    externals: [
+      'react',
+      'prop-types'
+    ],
     module: {
       rules: [
         {
@@ -26,7 +29,10 @@ exports = [
   {
     entry: './src/entrypoint.js',
     resolve: {
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+      modules: ['src', 'node_modules'],
+    },
+    output: {
+      libraryTarget: 'umd',
     },
     module: {
       rules: [
@@ -37,9 +43,9 @@ exports = [
         },
       ],
     },
-    externals: {
-      react: 'react',
-      'prop-types': 'prop-types'
-    },
+    externals: [
+      'react',
+      'prop-types'
+    ],
   },
 ]
