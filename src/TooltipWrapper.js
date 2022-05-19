@@ -2,14 +2,17 @@ import { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 class TooltipWrapper extends Component {
-  // takes up the entire width of the screen
-  outerRef = createRef();
-  // shrinks and grows with tooltip content, if this is the same width as the outer ref then
-  // there's no need for any horizontal positioning changes
-  innerRef = createRef();
-  // the pointy part of the speech bubble, it always needs to be moved to the center of the element
-  decorationRef = createRef();
-  portalTarget = document.createElement('div');
+  constructor(props) {
+    super(props);
+    // takes up the entire width of the screen
+    this.outerRef = createRef();
+    // shrinks and grows with tooltip content, if this is the same width as the outer ref then
+    // there's no need for any horizontal positioning changes
+    this.innerRef = createRef();
+    // the pointy part of the speech bubble, it always needs to be moved to the center of the element
+    this.decorationRef = createRef();
+    this.portalTarget = document.createElement('div');
+  }
 
   componentDidMount() {
     document.body.prepend(this.portalTarget);
