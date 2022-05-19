@@ -13,12 +13,12 @@ class TooltipWrapper extends Component {
 
   componentDidMount() {
     document.body.prepend(this.portalTarget);
-    window.addEventListener('scroll', this.position)
+    window.addEventListener('scroll', this.position);
   }
 
   componentWillUnmount() {
     document.body.removeChild(this.portalTarget);
-    window.removeEventListener('scroll', this.position)
+    window.removeEventListener('scroll', this.position);
   }
 
   renderDecoration = (invert) => (
@@ -28,7 +28,7 @@ class TooltipWrapper extends Component {
         height: `${this.props.pointerSize}px`,
         width: `${this.props.pointerSize}px`,
         position: 'relative',
-        transform: invert ? 'scaleY(-1)' : 'none'
+        transform: invert ? 'scaleY(-1)' : 'none',
       }}
     >
       <svg
@@ -38,15 +38,19 @@ class TooltipWrapper extends Component {
         style={{
           display: 'block',
           position: 'relative',
-          top: '2px'
+          top: '2px',
         }}
       >
         <g width="100%" height="100%">
-          <polygon id="Polygon" fill={this.props.color} points="46 0 91.8993464 79.5 0.100653599 79.5" />
+          <polygon
+            id="Polygon"
+            fill={this.props.color}
+            points="46 0 91.8993464 79.5 0.100653599 79.5"
+          />
         </g>
       </svg>
     </div>
-  )
+  );
 
   componentDidUpdate(prevProps) {
     if (prevProps.visible !== this.props.visible) {
@@ -68,35 +72,39 @@ class TooltipWrapper extends Component {
 
     // move tooltip to above the element if ths position is top
     if (this.props.position === 'top') {
-      this.outerRef.current.style.top = `${element.top - outer.height - this.props.spacing}px`;
+      this.outerRef.current.style.top = `${
+        element.top - outer.height - this.props.spacing
+      }px`;
     } else {
-      this.outerRef.current.style.top = `${element.bottom + this.props.spacing}px`;
+      this.outerRef.current.style.top = `${
+        element.bottom + this.props.spacing
+      }px`;
     }
 
     // move the decoration to the center of the element
-    const targetPosition = element.x + (element.width / 2);
-    const decorationPosition = decoration.x + (decoration.width / 2);
+    const targetPosition = element.x + element.width / 2;
+    const decorationPosition = decoration.x + decoration.width / 2;
     const decorationDiff = targetPosition - decorationPosition;
     this.decorationRef.current.style.left = `${decorationDiff}px`;
 
     // move the tooltip to the center of the element unless that would move it off screen,
     // in which case make it flush to the side.
-    if (targetPosition + (inner.width / 2) > outer.right) {
+    if (targetPosition + inner.width / 2 > outer.right) {
       const innerDiff = outer.right - inner.right;
       this.innerRef.current.style.left = `${innerDiff}px`;
       return;
     }
 
-    if (targetPosition - (inner.width / 2) < 0 ) return;
+    if (targetPosition - inner.width / 2 < 0) return;
 
-    const innerPosition = inner.x + (inner.width / 2);
+    const innerPosition = inner.x + inner.width / 2;
     const innerDiff = targetPosition - innerPosition;
 
     this.innerRef.current.style.left = `${innerDiff}px`;
-  }
+  };
 
   render() {
-    return(
+    return (
       <div
         ref={this.outerRef}
         style={{
@@ -107,8 +115,10 @@ class TooltipWrapper extends Component {
           left: '10px',
           right: '10px',
           pointerEvents: 'none',
-          transition: this.props.fade ? `opacity ${this.props.fadeDuration} ${this.props.fadeEasingFunction}` : 'none',
-          opacity: this.props.visible || this.props.devMode ? '1' : '0'
+          transition: this.props.fade
+            ? `opacity ${this.props.fadeDuration} ${this.props.fadeEasingFunction}`
+            : 'none',
+          opacity: this.props.visible || this.props.devMode ? '1' : '0',
         }}
       >
         {this.props.position === 'bottom' && this.renderDecoration()}
@@ -119,7 +129,7 @@ class TooltipWrapper extends Component {
             style={{
               position: 'relative',
               backgroundColor: this.props.color,
-              ...this.props.style
+              ...this.props.style,
             }}
           >
             {this.props.children}
@@ -133,7 +143,8 @@ class TooltipWrapper extends Component {
 
 TooltipWrapper.propTypes = {
   // ref pointing to the element this tooltip is for
-  elementRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
+  elementRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
   children: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
   visible: PropTypes.bool.isRequired,
@@ -145,7 +156,12 @@ TooltipWrapper.propTypes = {
   spacing: PropTypes.number.isRequired,
   fade: PropTypes.bool.isRequired,
   fadeDuration: PropTypes.string.isRequired,
-  fadeEasingFunction: PropTypes.string.isRequired
+  fadeEasingFunction: PropTypes.string.isRequired,
+  devMode: PropTypes.bool,
+};
+
+TooltipWrapper.defaultProps = {
+  devMode: false,
 };
 
 export default TooltipWrapper;

@@ -51,20 +51,22 @@ const Tooltip = (props) => {
       )}
     </HoverDetector>
   );
-}
+};
 
 Tooltip.propTypes = {
   devMode: PropTypes.bool,
   hoverDurationUntilVisible: PropTypes.number,
   children: PropTypes.node.isRequired,
   tooltipChildren: PropTypes.node.isRequired,
-  tooltipPosition: PropTypes.string, tooltipColor: PropTypes.string,
+  tooltipPosition: PropTypes.string,
+  tooltipColor: PropTypes.string,
   tooltipStyle: PropTypes.object,
   tooltipClassName: PropTypes.string,
   tooltipZIndex: PropTypes.number,
   tooltipPointerSize: PropTypes.number,
   tooltipSpacing: PropTypes.number,
   tooltipFade: PropTypes.bool,
+  tooltipFadeDuration: PropTypes.string,
   tooptipFadeDuration: PropTypes.string,
   tooltipFadeEasingFunction: PropTypes.string,
 };
@@ -81,7 +83,7 @@ Tooltip.defaultProps = {
   tooltipSpacing: 0,
   tooltipFade: true,
   tooltipFadeDuration: '0.2s',
-  tooltipFadeEasingFunction: 'ease-in-out'
+  tooltipFadeEasingFunction: 'ease-in-out',
 };
 
 export default Tooltip;

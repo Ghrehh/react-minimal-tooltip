@@ -8,26 +8,29 @@ const HoverDetector = (props) => {
   const divRef = useRef();
 
   const handleEnter = (e) => {
-    const timeoutId = setTimeout(handleThresholdReached, props.hoverDurationThreshold);
+    const timeoutId = setTimeout(
+      handleThresholdReached,
+      props.hoverDurationThreshold
+    );
 
     setTimeoutId(timeoutId);
 
     props.onMouseEnter(e);
-  }
+  };
 
   const handleLeave = (e) => {
-    if (timeoutId) clearTimeout(timeoutId)
+    if (timeoutId) clearTimeout(timeoutId);
     setTimeoutId(null);
     setThresholdReached(false);
 
     props.onMouseLeave(e);
-  }
+  };
 
   const handleThresholdReached = () => {
     setThresholdReached(true);
-  }
+  };
 
-  const { hoverDurationThreshold, style, ...remainingProps } = props;
+  const { hoverDurationThreshold, ...remainingProps } = props;
 
   return (
     <div
@@ -36,26 +39,24 @@ const HoverDetector = (props) => {
       onMouseLeave={handleLeave}
       ref={divRef}
     >
-      {
-        props.children({
-          thresholdReached: thresholdReached,
-          internalDivRef: divRef
-        })
-      }
+      {props.children({
+        thresholdReached,
+        internalDivRef: divRef,
+      })}
     </div>
-  )
-}
+  );
+};
 
 HoverDetector.propTypes = {
   children: PropTypes.func.isRequired,
   hoverDurationThreshold: PropTypes.number.isRequired,
   onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func
-}
+  onMouseLeave: PropTypes.func,
+};
 
 HoverDetector.defaultProps = {
   onMouseEnter: () => {},
-  onMouseLeave: () => {}
-}
+  onMouseLeave: () => {},
+};
 
 export default HoverDetector;

@@ -8,12 +8,12 @@ export default {
   output: [
     {
       file: 'dist/rmt-es.js',
-      format: 'es'
-    }
+      format: 'es',
+    },
   ],
   plugins: [
     nodeResolve({
-      moduleDirectories: ['src', 'node_modules']
+      moduleDirectories: ['src', 'node_modules'],
     }),
     babel({ babelHelpers: 'runtime' }),
     commonjs(),
