@@ -24,36 +24,38 @@ class TooltipWrapper extends Component {
     window.removeEventListener('scroll', this.position);
   }
 
-  renderDecoration = (invert) => (
-    <div
-      ref={this.decorationRef}
-      style={{
-        height: `${this.props.pointerSize}px`,
-        width: `${this.props.pointerSize}px`,
-        position: 'relative',
-        transform: invert ? 'scaleY(-1)' : 'none',
-      }}
-    >
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 92 80"
+  renderDecoration(invert) {
+    return (
+      <div
+        ref={this.decorationRef}
         style={{
-          display: 'block',
+          height: `${this.props.pointerSize}px`,
+          width: `${this.props.pointerSize}px`,
           position: 'relative',
-          top: '2px',
+          transform: invert ? 'scaleY(-1)' : 'none',
         }}
       >
-        <g width="100%" height="100%">
-          <polygon
-            id="Polygon"
-            fill={this.props.color}
-            points="46 0 91.8993464 79.5 0.100653599 79.5"
-          />
-        </g>
-      </svg>
-    </div>
-  );
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 92 80"
+          style={{
+            display: 'block',
+            position: 'relative',
+            top: '2px',
+          }}
+        >
+          <g width="100%" height="100%">
+            <polygon
+              id="Polygon"
+              fill={this.props.color}
+              points="46 0 91.8993464 79.5 0.100653599 79.5"
+            />
+          </g>
+        </svg>
+      </div>
+    );
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.visible !== this.props.visible) {
@@ -61,7 +63,7 @@ class TooltipWrapper extends Component {
     }
   }
 
-  position = () => {
+  position() {
     // early return so non-visible tooltips don't reposition
     if (!this.props.visible) return;
     this.outerRef.current.style.top = 'initial';
@@ -104,7 +106,7 @@ class TooltipWrapper extends Component {
     const innerDiff = targetPosition - innerPosition;
 
     this.innerRef.current.style.left = `${innerDiff}px`;
-  };
+  }
 
   render() {
     return (
