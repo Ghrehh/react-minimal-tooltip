@@ -1,17 +1,23 @@
-module.exports = [
+const path = require('path');
+exports = [
   {
     experiments: {
       outputModule: true,
     },
     entry: './src/entrypoint.js',
+    output: {
+      library: {
+        type: "module",
+      },
+    },
     resolve: {
-      modules: ['src', 'node_modules'],
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     },
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: /src/,
+          exclude: /node_modules/,
           use: 'babel-loader',
         },
       ],
@@ -20,13 +26,13 @@ module.exports = [
   {
     entry: './src/entrypoint.js',
     resolve: {
-      modules: ['src', 'node_modules'],
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     },
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: /src/,
+          exclude: /node_modules/,
           use: 'babel-loader',
         },
       ],
