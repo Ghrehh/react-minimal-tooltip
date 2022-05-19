@@ -32,7 +32,10 @@ module.exports = [
       modules: ['src', 'node_modules'],
     },
     output: {
-      libraryTarget: 'umd',
+      library: {
+        name: 'ye',
+        type: "umd"
+      },
     },
     module: {
       rules: [
