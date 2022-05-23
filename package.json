@@ -5,7 +5,7 @@
   "main": "dist/rmt-es.js",
   "module": "dist/rmt-es.js",
   "exports": "./dist/rmt-es.js",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "dependencies": {},
   "description": "Minimal React Tooltip Library",
   "license": "(MIT OR Apache-2.0)",

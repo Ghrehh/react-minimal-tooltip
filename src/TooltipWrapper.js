@@ -58,7 +58,7 @@ class TooltipWrapper extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.visible !== this.props.visible) {
+    if (prevProps?.visible !== this.props?.visible) {
       this.position();
     }
   }
